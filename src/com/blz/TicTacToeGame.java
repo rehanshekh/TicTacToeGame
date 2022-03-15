@@ -3,6 +3,8 @@ package com.blz;
 import java.util.Scanner;
 
 public class TicTacToeGame {
+    public static char inputUser;
+    public static char inputC;
 
     public static void main(String[] args) {
         char[] board = new char[10];
@@ -11,7 +13,9 @@ public class TicTacToeGame {
         }
         char inputUser = input();
         if (inputUser == 'X') {
-            char inputC = 'O';
+            inputC = 'O';
+        } else {
+            inputC = 'X';
         }
     }
 
