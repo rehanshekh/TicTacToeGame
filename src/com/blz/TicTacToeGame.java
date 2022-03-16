@@ -6,6 +6,8 @@ public class TicTacToeGame {
     public static char inputUser;
     public static char inputC;
     public static char[] board = new char[10];
+    public static String toss;
+    public static Scanner in = new Scanner(System.in);
 
     public static void main(String[] args) {
 
@@ -19,14 +21,33 @@ public class TicTacToeGame {
             inputC = 'X';
         }
         TicTacToeGame.showBoard();
-        TicTacToeGame.uSelection();
-        TicTacToeGame.showBoard();
-        TicTacToeGame.cSelection();
-        TicTacToeGame.showBoard();
+        String turn = toss();
+        if (turn.equals("Won")) {
+            for (int i = 1; i <= 4; i++) {
+                TicTacToeGame.uSelection();
+                TicTacToeGame.showBoard();
+                TicTacToeGame.cSelection();
+                TicTacToeGame.showBoard();
+            }
+        } else {
+            for (int i = 1; i <= 4; i++) {
+                TicTacToeGame.cSelection();
+                TicTacToeGame.showBoard();
+                TicTacToeGame.uSelection();
+                TicTacToeGame.showBoard();
+            }
+        }
+        if (turn.equals("Won")) {
+            TicTacToeGame.uSelection();
+            TicTacToeGame.showBoard();
+        } else {
+            TicTacToeGame.cSelection();
+            TicTacToeGame.showBoard();
+
+        }
     }
 
     public static char input() {
-        Scanner in = new Scanner(System.in);
         System.out.println("Please enter your input in X / O");
         char inputU = in.next().charAt(0);
         return inputU;
@@ -45,8 +66,7 @@ public class TicTacToeGame {
         int j = 0;
         while (j < 1) {
             System.out.println("Please enter the index from 1 to 9 to make the move");
-            Scanner in1 = new Scanner(System.in);
-            int select = in1.nextInt();
+            int select = in.nextInt();
             if (board[select] == ' ') {
                 board[select] = inputUser;
                 j = 1;
@@ -65,5 +85,24 @@ public class TicTacToeGame {
                 i = 1;
             }
         }
+    }
+
+    public static String toss() {
+        System.out.println("Please enter your call Heads/Tails");
+        String call = in.next();
+        int choice = (int) ((Math.floor(Math.random() * 10) % 2));
+        if (choice == 1) {
+            toss = "Heads";
+        } else {
+            toss = "Tails";
+        }
+        if (toss.equals(call)) {
+            System.out.println("You Won");
+            toss = "Won";
+        } else {
+            System.out.println("You Lose");
+            toss = "Lose";
+        }
+        return toss;
     }
 }
