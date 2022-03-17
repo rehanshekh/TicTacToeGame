@@ -8,6 +8,8 @@ public class TicTacToeGame {
     public static char[] board = new char[10];
     public static String toss;
     public static Scanner in = new Scanner(System.in);
+    public static String status;
+    public static String check;
 
     public static void main(String[] args) {
 
@@ -23,27 +25,31 @@ public class TicTacToeGame {
         TicTacToeGame.showBoard();
         String turn = toss();
         if (turn.equals("Won")) {
-            for (int i = 1; i <= 4; i++) {
-                TicTacToeGame.uSelection();
-                TicTacToeGame.showBoard();
-                TicTacToeGame.cSelection();
-                TicTacToeGame.showBoard();
-            }
-        } else {
-            for (int i = 1; i <= 4; i++) {
-                TicTacToeGame.cSelection();
-                TicTacToeGame.showBoard();
-                TicTacToeGame.uSelection();
-                TicTacToeGame.showBoard();
-            }
-        }
-        if (turn.equals("Won")) {
             TicTacToeGame.uSelection();
-            TicTacToeGame.showBoard();
+            for (int i = 1; i <= 4; i++) {
+                TicTacToeGame.showBoard();
+                TicTacToeGame.cSelection();
+                TicTacToeGame.showBoard();
+                TicTacToeGame.uSelection();
+                TicTacToeGame.showBoard();
+                check = check();
+                if (check == "Done") {
+                    break;
+                }
+            }
         } else {
             TicTacToeGame.cSelection();
-            TicTacToeGame.showBoard();
-
+            for (int i = 1; i <= 4; i++) {
+                TicTacToeGame.showBoard();
+                TicTacToeGame.uSelection();
+                TicTacToeGame.showBoard();
+                check = check();
+                if (check == "Done") {
+                    break;
+                }
+                TicTacToeGame.cSelection();
+                TicTacToeGame.showBoard();
+            }
         }
     }
 
@@ -104,5 +110,42 @@ public class TicTacToeGame {
             toss = "Lose";
         }
         return toss;
+    }
+
+    public static String check() {
+        if (board[1] == inputUser) {
+            if ((board[2] == inputUser) && (board[3] == inputUser)) {
+                System.out.println("Player Won");
+                status = "Done";
+            } else if ((board[5] == inputUser) && (board[9] == inputUser)) {
+                System.out.println("PLayer Won");
+                status = "Done";
+            } else if ((board[4] == inputUser) && (board[7] == inputUser)) {
+                System.out.println("Player Won");
+                status = "Done";
+            }
+        } else if (board[3] == inputUser) {
+            if ((board[6] == inputUser) && (board[9] == inputUser)) {
+                System.out.println("Player Won");
+                status = "Done";
+            } else if ((board[5] == inputUser) && (board[7] == inputUser)) {
+                System.out.println("PLayer Won");
+                status = "Done";
+            }
+        } else if (board[7] == inputUser) {
+            if ((board[8] == inputUser) && (board[9] == inputUser)) {
+                System.out.println("Player Won");
+                status = "Done";
+            }
+        } else if (board[5] == inputUser) {
+            if ((board[2] == inputUser) && (board[8] == inputUser)) {
+                System.out.println("Player Won");
+                status = "Done";
+            } else if ((board[4] == inputUser) && (board[6] == inputUser)) {
+                System.out.println("PLayer Won");
+                status = "Done";
+            }
+        }
+        return status;
     }
 }
