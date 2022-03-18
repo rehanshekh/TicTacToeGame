@@ -1,5 +1,6 @@
 package com.blz;
 
+import java.util.Objects;
 import java.util.Scanner;
 
 public class TicTacToeGame {
@@ -10,6 +11,7 @@ public class TicTacToeGame {
     public static Scanner in = new Scanner(System.in);
     public static String status;
     public static String check;
+    public static int select;
 
     public static void main(String[] args) {
 
@@ -24,35 +26,36 @@ public class TicTacToeGame {
         }
         TicTacToeGame.showBoard();
         String turn = toss();
+
         if (turn.equals("Won")) {
             TicTacToeGame.uSelection();
+            TicTacToeGame.showBoard();
+            firstMove();
             for (int i = 1; i <= 4; i++) {
-                TicTacToeGame.showBoard();
-                TicTacToeGame.cSelection();
                 TicTacToeGame.showBoard();
                 TicTacToeGame.uSelection();
                 TicTacToeGame.showBoard();
                 check = check();
-                if (check == "Done") {
+                if (Objects.equals(check, "Done")) {
                     break;
                 }
+                TicTacToeGame.cSelection();
+                TicTacToeGame.showBoard();
             }
         } else {
-            TicTacToeGame.cSelection();
-            for (int i = 1; i <= 4; i++) {
+            firstMove();
+            for (int i = 1; i <= 5; i++) {
                 TicTacToeGame.showBoard();
                 TicTacToeGame.uSelection();
                 TicTacToeGame.showBoard();
                 check = check();
-                if (check == "Done") {
+                if (Objects.equals(check, "Done")) {
                     break;
                 }
                 TicTacToeGame.cSelection();
-                TicTacToeGame.showBoard();
             }
         }
     }
-
     public static char input() {
         System.out.println("Please enter your input in X / O");
         char inputU = in.next().charAt(0);
@@ -85,7 +88,7 @@ public class TicTacToeGame {
     public static void cSelection() {
         int i = 0;
         while (i < 1) {
-            int select = (int) ((Math.floor(Math.random() * 10) % 8) + 1);
+            int select = (int) ((Math.floor(Math.random() * 10) % 9) + 1);
             if (board[select] == ' ') {
                 board[select] = inputC;
                 i = 1;
@@ -94,13 +97,13 @@ public class TicTacToeGame {
     }
 
     public static String toss() {
-        System.out.println("Please enter your call Heads/Tails");
+        System.out.println("Please enter your call H for Heads/ T for Tails");
         String call = in.next();
         int choice = (int) ((Math.floor(Math.random() * 10) % 2));
         if (choice == 1) {
-            toss = "Heads";
+            toss = "H";
         } else {
-            toss = "Tails";
+            toss = "T";
         }
         if (toss.equals(call)) {
             System.out.println("You Won");
@@ -147,5 +150,27 @@ public class TicTacToeGame {
             }
         }
         return status;
+    }
+
+    public static void firstMove() {
+        select = (int) ((Math.floor(Math.random() * 10) % 9) + 1);
+        if (board[5] == ' ') {
+            board[5] = inputC;
+        } else {
+            int r = 0;
+            while (r < 1) {
+                if (select % 2 == 0) {
+                    System.out.println(select);
+                    if (board[select + 1] == ' ') {
+                        board[select + 1] = inputC;
+                        r = 1;
+                    } else {
+                        select = (int) ((Math.floor(Math.random() * 10) % 9) + 1);
+                    }
+                } else {
+                    select = (int) ((Math.floor(Math.random() * 10) % 9) + 1);
+                }
+            }
+        }
     }
 }
