@@ -38,6 +38,10 @@ public class TicTacToeGame {
                 TicTacToeGame.showBoard();
                 TicTacToeGame.cSelection();
                 TicTacToeGame.showBoard();
+                check=cCheck();
+                if (Objects.equals(check, "Done")) {
+                    break;
+                }
                 TicTacToeGame.uSelection();
                 TicTacToeGame.showBoard();
                 check = check();
@@ -57,6 +61,10 @@ public class TicTacToeGame {
                     break;
                 }
                 TicTacToeGame.cSelection();
+                check = cCheck();
+                if (Objects.equals(check, "Done")) {
+                    break;
+                }
             }
             showBoard();
         }
@@ -200,5 +208,44 @@ public class TicTacToeGame {
                 }
             }
         }
+    }
+    public static String cCheck(){
+        if (board[1] == inputC) {
+            if ((board[2] == inputC) && (board[3] == inputC)) {
+                System.out.println("Player Lose");
+                status = "Done";
+            } else if ((board[5] == inputC) && (board[9] == inputC)) {
+                System.out.println("PLayer Lose");
+                status = "Done";
+            } else if ((board[4] == inputC) && (board[7] == inputC)) {
+                System.out.println("Player Lose");
+                status = "Done";
+            }
+        }
+        if (board[3] == inputC) {
+            if ((board[6] == inputC) && (board[9] == inputC)) {
+                System.out.println("Player Lose");
+                status = "Done";
+            } else if ((board[5] == inputC) && (board[7] == inputC)) {
+                System.out.println("PLayer Lose");
+                status = "Done";
+            }
+        }
+        if (board[7] == inputC) {
+            if ((board[8] == inputC) && (board[9] == inputC)) {
+                System.out.println("Player Lose");
+                status = "Done";
+            }
+        }
+        if (board[5] == inputC) {
+            if ((board[2] == inputC) && (board[8] == inputC)) {
+                System.out.println("Player Lose");
+                status = "Done";
+            } else if ((board[4] == inputC) && (board[6] == inputC)) {
+                System.out.println("PLayer Lose");
+                status = "Done";
+            }
+        }
+        return status;
     }
 }
