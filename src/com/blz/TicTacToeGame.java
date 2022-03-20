@@ -11,8 +11,9 @@ public class TicTacToeGame {
     public static Scanner in = new Scanner(System.in);
     public static String status;
     public static String check;
-    public static int select;
+    public static String select = null;
     public static int choice;
+    public static String report;
 
     public static void main(String[] args) {
 
@@ -27,17 +28,19 @@ public class TicTacToeGame {
         }
         TicTacToeGame.showBoard();
         char turn = toss();
-
         if (turn == 'W') {
             TicTacToeGame.uSelection();
-            TicTacToeGame.showBoard();
-            firstMove();
-            TicTacToeGame.showBoard();
-            TicTacToeGame.uSelection();
-            for (int i = 1; i <= 3; i++) {
+            for (int i = 1; i <= 4; i++) {
                 TicTacToeGame.showBoard();
-                TicTacToeGame.cSelection();
+                select = cPlay();
+                if (select == null) {
+                    TicTacToeGame.cSelection();
+                }
                 TicTacToeGame.showBoard();
+                check = cCheck();
+                if (Objects.equals(check, "Done")) {
+                    break;
+                }
                 TicTacToeGame.uSelection();
                 TicTacToeGame.showBoard();
                 check = check();
@@ -47,7 +50,7 @@ public class TicTacToeGame {
 
             }
         } else {
-            firstMove();
+            TicTacToeGame.cSelection();
             for (int i = 1; i <= 4; i++) {
                 TicTacToeGame.showBoard();
                 TicTacToeGame.uSelection();
@@ -56,7 +59,14 @@ public class TicTacToeGame {
                 if (Objects.equals(check, "Done")) {
                     break;
                 }
-                TicTacToeGame.cSelection();
+                select = cPlay();
+                if (select == null) {
+                    TicTacToeGame.cSelection();
+                }
+                check = cCheck();
+                if (Objects.equals(check, "Done")) {
+                    break;
+                }
             }
             showBoard();
         }
@@ -181,24 +191,235 @@ public class TicTacToeGame {
         return status;
     }
 
-    public static void firstMove() {
-        select = (int) ((Math.floor(Math.random() * 10) % 9) + 1);
-        if (board[5] == ' ') {
-            board[5] = inputC;
-        } else {
-            int r = 0;
-            while (r < 1) {
-                if (select % 2 == 0) {
-                    if (board[select + 1] == ' ') {
-                        board[select + 1] = inputC;
-                        r = 1;
-                    } else {
-                        select = (int) ((Math.floor(Math.random() * 10) % 9) + 1);
-                    }
-                } else {
-                    select = (int) ((Math.floor(Math.random() * 10) % 9) + 1);
-                }
+    public static String cCheck() {
+        if (board[1] == inputC) {
+            if ((board[2] == inputC) && (board[3] == inputC)) {
+                System.out.println("Player Lose");
+                status = "Done";
+            } else if ((board[5] == inputC) && (board[9] == inputC)) {
+                System.out.println("PLayer Lose");
+                status = "Done";
+            } else if ((board[4] == inputC) && (board[7] == inputC)) {
+                System.out.println("Player Lose");
+                status = "Done";
             }
         }
+        if (board[3] == inputC) {
+            if ((board[6] == inputC) && (board[9] == inputC)) {
+                System.out.println("Player Lose");
+                status = "Done";
+            } else if ((board[5] == inputC) && (board[7] == inputC)) {
+                System.out.println("PLayer Lose");
+                status = "Done";
+            }
+        }
+        if (board[7] == inputC) {
+            if ((board[8] == inputC) && (board[9] == inputC)) {
+                System.out.println("Player Lose");
+                status = "Done";
+            }
+        }
+        if (board[5] == inputC) {
+            if ((board[2] == inputC) && (board[8] == inputC)) {
+                System.out.println("Player Lose");
+                status = "Done";
+            } else if ((board[4] == inputC) && (board[6] == inputC)) {
+                System.out.println("PLayer Lose");
+                status = "Done";
+            }
+        }
+        return status;
+    }
+
+    public static String cPlay() {
+        report = null;
+        if (((board[1] == inputC) && (board[2] == inputC)) && ((board[3] == ' '))) {
+            board[3] = inputC;
+            report="ok";
+        } else if (((board[1] == inputC) && (board[3] == inputC)) && ((board[2] == ' '))) {
+            board[2] = inputC;
+            report="ok";
+        } else if (((board[1] == inputC) && (board[4] == inputC)) && ((board[7] == ' '))) {
+            board[7] = inputC;
+            report="ok";
+        } else if (((board[1] == inputC) && (board[7] == inputC)) && ((board[4] == ' '))) {
+            board[4] = inputC;
+            report="ok";
+        } else if (((board[1] == inputC) && (board[9] == inputC)) && ((board[5] == ' '))) {
+            board[5] = inputC;
+            report="ok";
+        } else if (((board[1] == inputC) && (board[5] == inputC)) && ((board[9] == ' '))) {
+            board[9] = inputC;
+            report="ok";
+        } else if (((board[2] == inputC) && (board[3] == inputC)) && ((board[1] == ' '))) {
+            board[1] = inputC;
+            report="ok";
+        } else if (((board[2] == inputC) && (board[8] == inputC)) && ((board[5] == ' '))) {
+            board[5] = inputC;
+            report="ok";
+        } else if (((board[2] == inputC) && (board[5] == inputC)) && ((board[8] == ' '))) {
+            board[8] = inputC;
+            report="ok";
+        } else if (((board[3] == inputC) && (board[2] == inputC)) && ((board[1] == ' '))) {
+            board[1] = inputC;
+            report="ok";
+        } else if (((board[3] == inputC) && (board[1] == inputC)) && ((board[2] == ' '))) {
+            board[2] = inputC;
+            report="ok";
+        } else if (((board[3] == inputC) && (board[6] == inputC)) && ((board[9] == ' '))) {
+            board[9] = inputC;
+            report="ok";
+        } else if (((board[3] == inputC) && (board[9] == inputC)) && ((board[6] == ' '))) {
+            board[6] = inputC;
+            report="ok";
+        } else if (((board[3] == inputC) && (board[5] == inputC)) && ((board[7] == ' '))) {
+            board[7] = inputC;
+            report="ok";
+        } else if (((board[3] == inputC) && (board[7] == inputC)) && ((board[5] == ' '))) {
+            board[5] = inputC;
+            report="ok";
+        } else if (((board[4] == inputC) && (board[1] == inputC)) && ((board[7] == ' '))) {
+            board[7] = inputC;
+            report="ok";
+        } else if (((board[4] == inputC) && (board[7] == inputC)) && ((board[1] == ' '))) {
+            board[1] = inputC;
+            report="ok";
+        } else if (((board[4] == inputC) && (board[5] == inputC)) && ((board[6] == ' '))) {
+            board[6] = inputC;
+            report="ok";
+        } else if (((board[4] == inputC) && (board[6] == inputC)) && ((board[5] == ' '))) {
+            board[5] = inputC;
+            report="ok";
+        } else if (((board[5] == inputC) && (board[1] == inputC)) && ((board[9] == ' '))) {
+            board[9] = inputC;
+            report="ok";
+        } else if (((board[5] == inputC) && (board[9] == inputC)) && ((board[1] == ' '))) {
+            board[1] = inputC;
+            report="ok";
+        } else if (((board[5] == inputC) && (board[2] == inputC)) && ((board[8] == ' '))) {
+            board[8] = inputC;
+            report="ok";
+        } else if (((board[5] == inputC) && (board[8] == inputC)) && ((board[2] == ' '))) {
+            board[2] = inputC;
+            report="ok";
+        } else if (((board[5] == inputC) && (board[3] == inputC)) && ((board[7] == ' '))) {
+            board[7] = inputC;
+            report="ok";
+        } else if (((board[5] == inputC) && (board[7] == inputC)) && ((board[3] == ' '))) {
+            board[3] = inputC;
+            report="ok";
+        } else if (((board[5] == inputC) && (board[4] == inputC)) && ((board[6] == ' '))) {
+            board[6] = inputC;
+            report="ok";
+        } else if (((board[5] == inputC) && (board[6] == inputC)) && ((board[4] == ' '))) {
+            board[4] = inputC;
+            report="ok";
+        } else if (((board[6] == inputC) && (board[9] == inputC)) && ((board[3] == ' '))) {
+            board[3] = inputC;
+            report="ok";
+        } else if (((board[7] == inputC) && (board[8] == inputC)) && ((board[9] == ' '))) {
+            board[9] = inputC;
+            report="ok";
+        } else if (((board[8] == inputC) && (board[9] == inputC)) && ((board[7] == ' '))) {
+            board[7] = inputC;
+            report="ok";
+        } else if (((board[7] == inputC) && (board[9] == inputC)) && ((board[8] == ' '))) {
+            board[8] = inputC;
+            report="ok";
+        }else if (((board[1] == inputUser) && (board[2] == inputUser)) && ((board[3] == ' '))) {
+            board[3] = inputC;
+            report="ok";
+        } else if (((board[1] == inputUser) && (board[3] == inputUser)) && ((board[2] == ' '))) {
+            board[2] = inputC;
+            report="ok";
+        } else if (((board[1] == inputUser) && (board[4] == inputUser)) && ((board[7] == ' '))) {
+            board[7] = inputC;
+            report="ok";
+        } else if (((board[1] == inputUser) && (board[7] == inputUser)) && ((board[4] == ' '))) {
+            board[4] = inputC;
+            report="ok";
+        } else if (((board[1] == inputUser) && (board[9] == inputUser)) && ((board[5] == ' '))) {
+            board[5] = inputC;
+            report="ok";
+        } else if (((board[1] == inputUser) && (board[5] == inputUser)) && ((board[9] == ' '))) {
+            board[9] = inputC;
+            report="ok";
+        } else if (((board[2] == inputUser) && (board[3] == inputUser)) && ((board[1] == ' '))) {
+            board[1] = inputC;
+            report="ok";
+        } else if (((board[2] == inputUser) && (board[8] == inputUser)) && ((board[5] == ' '))) {
+            board[5] = inputC;
+            report="ok";
+        } else if (((board[2] == inputUser) && (board[5] == inputUser)) && ((board[8] == ' '))) {
+            board[8] = inputC;
+            report="ok";
+        } else if (((board[3] == inputUser) && (board[2] == inputUser)) && ((board[1] == ' '))) {
+            board[1] = inputC;
+            report="ok";
+        } else if (((board[3] == inputUser) && (board[1] == inputUser)) && ((board[2] == ' '))) {
+            board[2] = inputC;
+            report="ok";
+        } else if (((board[3] == inputUser) && (board[6] == inputUser)) && ((board[9] == ' '))) {
+            board[9] = inputC;
+            report="ok";
+        } else if (((board[3] == inputUser) && (board[9] == inputUser)) && ((board[6] == ' '))) {
+            board[6] = inputC;
+            report="ok";
+        } else if (((board[3] == inputUser) && (board[5] == inputUser)) && ((board[7] == ' '))) {
+            board[7] = inputC;
+            report="ok";
+        } else if (((board[3] == inputUser) && (board[7] == inputUser)) && ((board[5] == ' '))) {
+            board[5] = inputC;
+            report="ok";
+        } else if (((board[4] == inputUser) && (board[1] == inputUser)) && ((board[7] == ' '))) {
+            board[7] = inputC;
+            report="ok";
+        } else if (((board[4] == inputUser) && (board[7] == inputUser)) && ((board[1] == ' '))) {
+            board[1] = inputC;
+            report="ok";
+        } else if (((board[4] == inputUser) && (board[5] == inputUser)) && ((board[6] == ' '))) {
+            board[6] = inputC;
+            report="ok";
+        } else if (((board[4] == inputUser) && (board[6] == inputUser)) && ((board[5] == ' '))) {
+            board[5] = inputC;
+            report="ok";
+        } else if (((board[5] == inputUser) && (board[1] == inputUser)) && ((board[9] == ' '))) {
+            board[9] = inputC;
+            report="ok";
+        } else if (((board[5] == inputUser) && (board[9] == inputUser)) && ((board[1] == ' '))) {
+            board[1] = inputC;
+            report="ok";
+        } else if (((board[5] == inputUser) && (board[2] == inputUser)) && ((board[8] == ' '))) {
+            board[8] = inputC;
+            report="ok";
+        } else if (((board[5] == inputUser) && (board[8] == inputUser)) && ((board[2] == ' '))) {
+            board[2] = inputC;
+            report="ok";
+        } else if (((board[5] == inputUser) && (board[3] == inputUser)) && ((board[7] == ' '))) {
+            board[7] = inputC;
+            report="ok";
+        } else if (((board[5] == inputUser) && (board[7] == inputUser)) && ((board[3] == ' '))) {
+            board[3] = inputC;
+            report="ok";
+        } else if (((board[5] == inputUser) && (board[4] == inputUser)) && ((board[6] == ' '))) {
+            board[6] = inputC;
+            report="ok";
+        } else if (((board[5] == inputUser) && (board[6] == inputUser)) && ((board[4] == ' '))) {
+            board[4] = inputC;
+            report="ok";
+        } else if (((board[6] == inputUser) && (board[9] == inputUser)) && ((board[3] == ' '))) {
+            board[3] = inputC;
+            report="ok";
+        } else if (((board[7] == inputUser) && (board[8] == inputUser)) && ((board[9] == ' '))) {
+            board[9] = inputC;
+            report="ok";
+        } else if (((board[8] == inputUser) && (board[9] == inputUser)) && ((board[7] == ' '))) {
+            board[7] = inputC;
+            report="ok";
+        } else if (((board[7] == inputUser) && (board[9] == inputUser)) && ((board[8] == ' '))) {
+            board[8] = inputC;
+            report="ok";
+        }
+        return report;
     }
 }
