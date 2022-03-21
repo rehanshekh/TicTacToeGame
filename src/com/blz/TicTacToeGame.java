@@ -16,70 +16,77 @@ public class TicTacToeGame {
     public static String report;
 
     public static void main(String[] args) {
+        int match = 1;
+        while (match > 0) {
+            check=null;
+            for (int i = 1; i < 10; i++) {
+                board[i] = ' ';
+            }
+            inputUser = input();
+            if (inputUser == 'X') {
+                inputC = 'O';
+            } else {
+                inputC = 'X';
+            }
+            TicTacToeGame.showBoard();
+            char turn = toss();
+            if (turn == 'W') {
+                TicTacToeGame.uSelection();
+                for (int i = 1; i <= 4; i++) {
+                    TicTacToeGame.showBoard();
+                    select = cPlay();
+                    if (i == 4) {
+                        if (select == null) {
+                            select = lastMove();
+                        }
+                    }
+                    if (select == null) {
+                        TicTacToeGame.cSelection();
+                    }
+                    TicTacToeGame.showBoard();
+                    check = cCheck();
+                    if (Objects.equals(check, "Done")) {
+                        break;
+                    }
+                    TicTacToeGame.uSelection();
+                    TicTacToeGame.showBoard();
+                    check = check();
+                    if (Objects.equals(check, "Done")) {
+                        break;
+                    }
+                }
+            } else {
+                TicTacToeGame.cSelection();
+                for (int i = 1; i <= 4; i++) {
+                    TicTacToeGame.showBoard();
+                    TicTacToeGame.uSelection();
+                    TicTacToeGame.showBoard();
+                    check = check();
+                    if (Objects.equals(check, "Done")) {
+                        break;
+                    }
+                    select = cPlay();
+                    if (i == 4) {
+                        if (select == null) {
+                            select = lastMove();
+                        }
+                    }
+                    if (select == null) {
+                        TicTacToeGame.cSelection();
+                    }
+                    check = cCheck();
+                    if (Objects.equals(check, "Done")) {
+                        break;
+                    }
+                }
+                showBoard();
+            }
+            System.out.println("Press 1 to play again or 0 to stop play");
+            match = in.nextInt();
+        }
 
-        for (int i = 1; i < 10; i++) {
-            board[i] = ' ';
-        }
-        inputUser = input();
-        if (inputUser == 'X') {
-            inputC = 'O';
-        } else {
-            inputC = 'X';
-        }
-        TicTacToeGame.showBoard();
-        char turn = toss();
-        if (turn == 'W') {
-            TicTacToeGame.uSelection();
-            for (int i = 1; i <= 4; i++) {
-                TicTacToeGame.showBoard();
-                select = cPlay();
-                if (i == 4) {
-                    if (select == null) {
-                        select = lastMove();
-                    }
-                }
-                if (select == null) {
-                    TicTacToeGame.cSelection();
-                }
-                TicTacToeGame.showBoard();
-                check = cCheck();
-                if (Objects.equals(check, "Done")) {
-                    break;
-                }
-                TicTacToeGame.uSelection();
-                TicTacToeGame.showBoard();
-                check = check();
-                if (Objects.equals(check, "Done")) {
-                    break;
-                }
-            }
-        } else {
-            TicTacToeGame.cSelection();
-            for (int i = 1; i <= 4; i++) {
-                TicTacToeGame.showBoard();
-                TicTacToeGame.uSelection();
-                TicTacToeGame.showBoard();
-                check = check();
-                if (Objects.equals(check, "Done")) {
-                    break;
-                }
-                select = cPlay();
-                if (i == 4) {
-                    if (select == null) {
-                        select = lastMove();
-                    }
-                }
-                if (select == null) {
-                    TicTacToeGame.cSelection();
-                }
-                check = cCheck();
-                if (Objects.equals(check, "Done")) {
-                    break;
-                }
-            }
-            showBoard();
-        }
     }
+
 
     public static char input() {
         char inputU = ' ';
@@ -161,6 +168,7 @@ public class TicTacToeGame {
 
 
     public static String check() {
+        status=null;
         if (board[1] == inputUser) {
             if ((board[2] == inputUser) && (board[3] == inputUser)) {
                 System.out.println("Player Won");
@@ -201,6 +209,7 @@ public class TicTacToeGame {
     }
 
     public static String cCheck() {
+        status=null;
         if (board[1] == inputC) {
             if ((board[2] == inputC) && (board[3] == inputC)) {
                 System.out.println("Player Lose");
